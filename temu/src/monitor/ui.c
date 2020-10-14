@@ -9,6 +9,8 @@ void cpu_exec(uint32_t);
 
 void display_reg();
 
+uint32_t mem_read(uint32_t addr, size_t len);
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -35,7 +37,80 @@ static int cmd_c(char *args) {
 static int cmd_q(char *args) {
 	return -1;
 }
+/*My code begin*/
+static int cmd_si(char *args) {
+	if(args){
+		int steps=atoi(args);
+		if(steps>0){
+			printf("%s steps.\n",args);
+			cpu_exec(steps);
+		}else{
+			printf("Error, invaild args.\n");
+		}
+	}else{
+		printf("Single step.\n");
+		cpu_exec(1);		
+	}
+	return 0;
+}
 
+static int cmd_info_r(){
+	printf("Show the statuses of regs\n");	
+	display_reg();
+	return 0;
+}
+
+static int cmd_info(char *args){
+	if(!args){
+		printf("Error, need args.\n");
+		return 0;
+	}
+	if(strcmp(args, "r") == 0){
+		cmd_info_r();
+		return 0;
+	}else if(strcmp(args, "w") == 0){
+		printf("Not yet implemented.\n");
+		return 0;
+	}else{
+		printf("Error, invaild args.\n");
+		return 0;
+	}
+	printf("Error, unknow reason.\n");
+	return 0;
+}
+
+static int cmd_x(char *args){
+	if(!args){
+		printf("Error, invaild args.\n"); 
+		return 0;
+	}
+	char *N = strtok(args, " ");
+	char *EXPR = N + strlen(N) + 1;
+	if(N&&EXPR){	
+		printf("x N = %s, EXPR = %s\n",N,EXPR);
+		uint32_t data = 0;
+    		uint32_t addr = 0;
+		int ndwords = atoi(N);
+		if(ndwords<1){
+			printf("Error, N must be positive.\n");
+			return 0;
+		}         
+    		if(sscanf(EXPR, "%x", &addr)<1){
+			printf("Error, x must be valid hex number.\n");
+			return 0;
+		}
+		printf("Read %d double words from 0x%08x.\n",ndwords,addr);		
+		for(int i=0;i<ndwords;i++){
+			data=mem_read(addr,4);
+			printf("0x%x\n",data);
+		}    
+		return 0;
+	}else{
+		printf("Error, invaild args.\n");
+		return 0;
+	}
+}
+/*My code end*/
 static int cmd_help(char *args);
 
 static struct {
@@ -45,9 +120,16 @@ static struct {
 } cmd_table [] = {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
+	/* TODO: Add more commands */
+	/*My code begin*/
+	{ "si", "si command", cmd_si },
+	{ "info", "info command", cmd_info },
+	{ "x", "x command", cmd_x },
+	/*My code end*/
+		
 	{ "q", "Exit TEMU", cmd_q }
 
-	/* TODO: Add more commands */
+	
 
 };
 
@@ -101,6 +183,6 @@ void ui_mainloop() {
 			}
 		}
 
-		if(i == NR_CMD) { printf("Unknown command '%s'\n", cmd); }
+		if(i == NR_CMD) { printf("Unknown command '%s'\n", cmd);printf("Unknown command '%s'\n", cmd);}
 	}
 }
