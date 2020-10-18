@@ -11,6 +11,10 @@ void display_reg();
 
 uint32_t mem_read(uint32_t addr, size_t len);
 
+/*My code begin*/
+uint32_t expr(char*e,bool*success);
+/*My code end*/
+
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
 	static char *line_read = NULL;
@@ -110,6 +114,23 @@ static int cmd_x(char *args){
 		return 0;
 	}
 }
+
+static int cmd_p(char *args){
+	if(!args){
+		printf("Error, invaild args.\n"); 
+		return 0;
+	}
+	bool*success=(bool*)malloc(sizeof(bool));
+	*success=true;
+	uint32_t value=expr(args,success);
+	if(!(*success)){
+		printf("Fail to caculate.\n");
+	}else{
+		printf("the value of exp is 0x%x\n",value);
+		printf("the value of exp is %d\n",value);
+	}
+	return 0;
+}
 /*My code end*/
 static int cmd_help(char *args);
 
@@ -125,6 +146,7 @@ static struct {
 	{ "si", "si command", cmd_si },
 	{ "info", "info command", cmd_info },
 	{ "x", "x command", cmd_x },
+	{ "p", "p command", cmd_p },
 	/*My code end*/
 		
 	{ "q", "Exit TEMU", cmd_q }
