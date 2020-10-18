@@ -1,11 +1,18 @@
 #include "monitor.h"
 #include "helper.h"
-
+/*My code begin*/
+#include "watchpoint.h"
+#include <stdlib.h>
+/*My code end*/
 /* The assembly code of instructions executed is only output to the screen
  * when the number of instructions executed is less than this value.
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
+/*My code begin*/
+WP*gethead();
+uint32_t expr(char *e, bool *success);
+/*My code end*/
 #define MAX_INSTR_TO_PRINT 10
 
 int temu_state = STOP;
@@ -47,8 +54,8 @@ void cpu_exec(volatile uint32_t n) {
 
 		/* Execute one instruction, including instruction fetch,
 		 * instruction decode, and the actual execution. */
+		
 		exec(cpu.pc);
-
 		cpu.pc += 4;
 
 #ifdef DEBUG
@@ -61,8 +68,20 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-
-
+		/*My code begin*/
+		bool*success=(bool*)malloc(sizeof(bool));
+		WP*itor=gethead();
+		int val=0;
+		while(itor!=NULL){
+			val=expr(itor->exp,success);
+			if(val!=itor->last_value){
+			printf("Watchpoint triggered: TEMU stop because the exp %s changed from %x to %x\n",itor->exp,itor->last_value,val);
+			itor->last_value=val;
+			temu_state = STOP;
+			}
+			itor=itor->next;
+		}
+		/*My code end*/
 		if(temu_state != RUNNING) { return; }
 	}
 

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <watchpoint.h>
 
 void cpu_exec(uint32_t);
 
@@ -13,6 +14,9 @@ uint32_t mem_read(uint32_t addr, size_t len);
 
 /*My code begin*/
 uint32_t expr(char*e,bool*success);
+WP* new_wp();
+void free_wp(WP*wp);
+WP* gethead();
 /*My code end*/
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -131,6 +135,22 @@ static int cmd_p(char *args){
 	}
 	return 0;
 }
+
+static int cmd_w(char *args){
+	if(!args){
+		printf("Error, invaild args.\n"); 
+		return 0;
+	}
+	//Alloc new wp
+	WP*wp=new_wp();
+	//set exp
+	strcpy(wp->exp,args);
+	bool*success=(bool*)malloc(sizeof(bool));
+	*success=true;
+	wp->last_value=expr(wp->exp,success); 
+	printf("Watchpoint: New watchpoint assigned with init value: %x\n",wp->last_value); 
+	return 0;
+}
 /*My code end*/
 static int cmd_help(char *args);
 
@@ -147,6 +167,7 @@ static struct {
 	{ "info", "info command", cmd_info },
 	{ "x", "x command", cmd_x },
 	{ "p", "p command", cmd_p },
+	{ "w", "w command", cmd_w },
 	/*My code end*/
 		
 	{ "q", "Exit TEMU", cmd_q }
