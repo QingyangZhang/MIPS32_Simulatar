@@ -10,7 +10,7 @@
  * You can modify this value as you want.
  */
 /*My code begin*/
-WP*gethead();
+WP*get_head();
 uint32_t expr(char *e, bool *success);
 /*My code end*/
 #define MAX_INSTR_TO_PRINT 10
@@ -70,7 +70,7 @@ void cpu_exec(volatile uint32_t n) {
 		/* TODO: check watchpoints here. */
 		/*My code begin*/
 		bool*success=(bool*)malloc(sizeof(bool));
-		WP*itor=gethead();
+		WP*itor=get_head();
 		int val=0;
 		while(itor!=NULL){
 			val=expr(itor->exp,success);

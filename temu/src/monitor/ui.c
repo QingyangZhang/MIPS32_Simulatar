@@ -15,8 +15,9 @@ uint32_t mem_read(uint32_t addr, size_t len);
 /*My code begin*/
 uint32_t expr(char*e,bool*success);
 WP* new_wp();
-void free_wp(WP*wp);
-WP* gethead();
+int free_wp(WP*wp);
+WP* get_head();
+void display_wp();
 /*My code end*/
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
@@ -68,6 +69,12 @@ static int cmd_info_r(){
 	return 0;
 }
 
+static int cmd_info_w(){
+	printf("Show the statuses of watchpoints\n");	
+	display_wp();
+	return 0;
+}
+
 static int cmd_info(char *args){
 	if(!args){
 		printf("Error, need args.\n");
@@ -77,7 +84,7 @@ static int cmd_info(char *args){
 		cmd_info_r();
 		return 0;
 	}else if(strcmp(args, "w") == 0){
-		printf("Not yet implemented.\n");
+		cmd_info_w();
 		return 0;
 	}else{
 		printf("Error, invaild args.\n");
@@ -141,7 +148,7 @@ static int cmd_w(char *args){
 		printf("Error, invaild args.\n"); 
 		return 0;
 	}
-	//Alloc new wp
+	//acquire new wp
 	WP*wp=new_wp();
 	//set exp
 	strcpy(wp->exp,args);
@@ -149,6 +156,35 @@ static int cmd_w(char *args){
 	*success=true;
 	wp->last_value=expr(wp->exp,success); 
 	printf("Watchpoint: New watchpoint assigned with init value: %x\n",wp->last_value); 
+	return 0;
+}
+
+static int cmd_d(char *args){
+	if(!args){
+		printf("Error, invaild args.\n"); 
+		return 0;
+	}
+	int no=0;
+	if(sscanf(args, "%d", &no)<1){
+		printf("Error, args must be valid number.\n");
+		return 0;
+	}
+	//Alloc new wp
+	WP*itor = get_head();
+	for(;itor!=NULL;itor=itor->next){
+		if(itor->NO==no)break;
+	}
+	if(itor==NULL){
+		printf("Error: Cannot find watchpoint.\n");
+		return 0;
+	}
+	printf("find watchpoint.\n");
+	//free wp
+	if(free_wp(itor)){
+		printf("Error: Fail to free watchpoint.\n");
+		return 0;
+	};
+	printf("Watchpoint: delete watchpoint NO.%d\n",no); 
 	return 0;
 }
 /*My code end*/
@@ -168,6 +204,7 @@ static struct {
 	{ "x", "x command", cmd_x },
 	{ "p", "p command", cmd_p },
 	{ "w", "w command", cmd_w },
+	{ "d", "d command", cmd_d },
 	/*My code end*/
 		
 	{ "q", "Exit TEMU", cmd_q }

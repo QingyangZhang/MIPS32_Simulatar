@@ -139,7 +139,7 @@ make_helper(sb) {
 
 	decode_imm_type(instr);
 	uint32_t addr = op_src1->val+(((int32_t)op_src2->imm<<16)>>16); 
-	uint32_t value = op_src2->val & 0xff;
+	uint32_t value = op_dest->val & 0xff;
 	mem_write(addr,1,value);
 	sprintf(assembly, "sb   %s,  0x%04x(%s)", REG_NAME(op_dest->reg), op_src2->imm,  REG_NAME(op_src1->reg));
 }
@@ -148,7 +148,7 @@ make_helper(sh) {
 
 	decode_imm_type(instr);
 	uint32_t addr = op_src1->val+(((int32_t)op_src2->imm<<16)>>16); 
-	uint32_t value = op_src2->val & 0xffff;
+	uint32_t value = op_dest->val & 0xffff;
 	mem_write(addr,2,value);
 	sprintf(assembly, "sh   %s,  0x%04x(%s)", REG_NAME(op_dest->reg), op_src2->imm,  REG_NAME(op_src1->reg));
 }
@@ -157,7 +157,7 @@ make_helper(sw) {
 
 	decode_imm_type(instr);
 	uint32_t addr = op_src1->val+(((int32_t)op_src2->imm<<16)>>16); 
-	uint32_t value = op_src2->val & 0xffffffff;
+	uint32_t value = op_dest->val & 0xffffffff;
 	mem_write(addr,4,value);
 	sprintf(assembly, "sw   %s,  0x%04x(%s)", REG_NAME(op_dest->reg), op_src2->imm,  REG_NAME(op_src1->reg));
 }

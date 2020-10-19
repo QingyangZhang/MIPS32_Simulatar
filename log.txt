@@ -1,0 +1,7 @@
+[./temu/src/monitor/expr.c,85,make_token] match rules[7] = "\$[a-z0-9]+" at position 0 with len 3: $pc
+[./temu/src/monitor/expr.c,85,make_token] match rules[10] = "==" at position 3 with len 2: ==
+[./temu/src/monitor/expr.c,85,make_token] match rules[0] = "0x[A-Fa-f0-9]+" at position 5 with len 4: 0x10
+[./temu/src/monitor/expr.c,85,make_token] match rules[7] = "\$[a-z0-9]+" at position 0 with len 3: $pc
+[./temu/src/monitor/expr.c,85,make_token] match rules[10] = "==" at position 3 with len 2: ==
+[./temu/src/monitor/expr.c,85,make_token] match rules[0] = "0x[A-Fa-f0-9]+" at position 5 with len 4: 0x10
+[./temu/src/monitor/expr.c,85,make_token] match rules[1] = "([1-9][0-9]{1,31})|[0-9]" at position 0 with len 1: 0
