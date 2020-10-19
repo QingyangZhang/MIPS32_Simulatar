@@ -1,3 +1,0 @@
-[./temu/src/monitor/expr.c,85,make_token] match rules[7] = "\$[a-z0-9]+" at position 0 with len 3: $pc
-       0:   3c 01 10 10         lui   $at,   0x1010
-[./temu/src/monitor/expr.c,85,make_token] match rules[7] = "\$[a-z0-9]+" at position 0 with len 3: $pc
