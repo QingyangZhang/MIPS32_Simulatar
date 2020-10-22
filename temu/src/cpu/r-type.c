@@ -88,9 +88,12 @@ make_helper(divu) {
 make_helper(mult) {
 
 	decode_r_type(instr);
-	long long int result = (int32_t)op_src1->val * (int32_t)op_src2->val;
-	cpu.hi = (uint32_t)result & 0xffffffff;
-	cpu.lo = (uint32_t)(result>>32);
+	int64_t result = ((int64_t)(int32_t)op_src1->val) * ((int64_t)(int32_t)op_src2->val);
+	//printf("op1:%d,op2:%d\n",(int32_t)op_src1->val,(int32_t)op_src2->val);
+	cpu.lo = result & 0xffffffff;
+	cpu.hi = result>>32;
+	//printf("result:%08lx\n",result);
+	//printf("mult: hi=%x,lo=%x\n",cpu.hi,cpu.lo);
 	sprintf(assembly, "mult   %s,   %s,   %s", REG_NAME(op_dest->reg), REG_NAME(op_src1->reg), REG_NAME(op_src2->reg));
 }
 
@@ -98,8 +101,11 @@ make_helper(multu) {
 
 	decode_r_type(instr);
 	uint64_t result = op_src1->val * op_src2->val;
-	cpu.hi = (uint32_t)result;
-	cpu.lo = (uint32_t)(result>>32);
+	cpu.lo = (uint32_t)result;
+	cpu.hi = (uint32_t)(result>>32);
+	//printf("op1:%x,op2:%x\n",op_src1->val,op_src2->val);
+	//printf("result:%08lx\n",result);
+	//printf("mult: hi=%x,lo=%x\n",cpu.hi,cpu.lo);
 	sprintf(assembly, "multu   %s,   %s,   %s", REG_NAME(op_dest->reg), REG_NAME(op_src1->reg), REG_NAME(op_src2->reg));
 }
 
@@ -134,8 +140,8 @@ make_helper(sllv) {
 make_helper(sll) {
 
 	decode_r_type(instr);
-	reg_w(op_dest->reg) =  op_src2->val << (instr & SHAMT_MASK);
-	sprintf(assembly, "sllv   %s,   %s,   0x%02x", REG_NAME(op_dest->reg), REG_NAME(op_src2->reg), (instr & SHAMT_MASK));
+	reg_w(op_dest->reg) =  op_src2->val << ((instr & SHAMT_MASK)>>FUNC_SIZE);
+	sprintf(assembly, "sll   %s,   %s,   0x%02x", REG_NAME(op_dest->reg), REG_NAME(op_src2->reg), (instr & SHAMT_MASK));
 }
 
 make_helper(srav) {
@@ -148,7 +154,7 @@ make_helper(srav) {
 make_helper(sra) {
 
 	decode_r_type(instr);
-	reg_w(op_dest->reg) =  (int32_t)op_src2->val >> (instr & SHAMT_MASK);
+	reg_w(op_dest->reg) =  (int32_t)op_src2->val >> ((instr & SHAMT_MASK)>>FUNC_SIZE);
 	sprintf(assembly, "sra   %s,   %s,   0x%02x", REG_NAME(op_dest->reg), REG_NAME(op_src2->reg), (instr & SHAMT_MASK));
 }
 
@@ -162,7 +168,7 @@ make_helper(srlv) {
 make_helper(srl) {
 
 	decode_r_type(instr);
-	reg_w(op_dest->reg) =  op_src2->val >> op_src1->val;
+	reg_w(op_dest->reg) =  op_src2->val >> ((instr & SHAMT_MASK)>>FUNC_SIZE);
 	sprintf(assembly, "srl   %s,   %s,   %s", REG_NAME(op_dest->reg), REG_NAME(op_src1->reg), REG_NAME(op_src2->reg));
 }
 

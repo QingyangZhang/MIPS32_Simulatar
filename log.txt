@@ -1,7 +1,27 @@
-[./temu/src/monitor/expr.c,85,make_token] match rules[7] = "\$[a-z0-9]+" at position 0 with len 3: $pc
-[./temu/src/monitor/expr.c,85,make_token] match rules[10] = "==" at position 3 with len 2: ==
-[./temu/src/monitor/expr.c,85,make_token] match rules[0] = "0x[A-Fa-f0-9]+" at position 5 with len 4: 0x10
-[./temu/src/monitor/expr.c,85,make_token] match rules[7] = "\$[a-z0-9]+" at position 0 with len 3: $pc
-[./temu/src/monitor/expr.c,85,make_token] match rules[10] = "==" at position 3 with len 2: ==
-[./temu/src/monitor/expr.c,85,make_token] match rules[0] = "0x[A-Fa-f0-9]+" at position 5 with len 4: 0x10
-[./temu/src/monitor/expr.c,85,make_token] match rules[1] = "([1-9][0-9]{1,31})|[0-9]" at position 0 with len 1: 0
+       0:   24 10 ff ff         addiu   $s0,   $zero,   0xffff
+       4:   24 11 00 14         addiu   $s1,   $zero,   0x0014
+       8:   00 00 20 21         addu   $a0,   $zero,   $zero
+       c:   00 00 00 00         sll   $zero,   $zero,   0x00
+      10:   00 10 97 c2         srl   $s2,   $zero,   $s0
+      14:   00 00 00 00         sll   $zero,   $zero,   0x00
+      18:   00 00 00 00         sll   $zero,   $zero,   0x00
+      1c:   02 32 80 20         add   $s0,   $s1,   $s2
+      20:   00 00 00 00         sll   $zero,   $zero,   0x00
+      24:   24 14 ff ff         addiu   $s4,   $zero,   0xffff
+      28:   00 10 8c 00         sll   $s1,   $s0,   0x400
+      2c:   02 34 00 18         mult   $zero,   $s1,   $s4
+      30:   00 00 00 00         sll   $zero,   $zero,   0x00
+      34:   22 34 1f ff         addi   $s4,   $s1,   0x1fff
+      38:   02 12 a8 20         add   $s5,   $s0,   $s2
+      3c:   00 00 00 00         sll   $zero,   $zero,   0x00
+      40:   00 10 40 83         sra   $t0,   $s0,   0x80
+      44:   00 15 4b c2         srl   $t1,   $zero,   $s5
+      48:   00 00 00 00         sll   $zero,   $zero,   0x00
+      4c:   00 00 00 00         sll   $zero,   $zero,   0x00
+      50:   a0 88 00 08         sb   $t0,  0x0008($a0)
+      54:   01 20 00 13         mtlo   $t1   
+      58:   00 00 00 00         sll   $zero,   $zero,   0x00
+      5c:   00 00 00 00         sll   $zero,   $zero,   0x00
+      60:   01 30 58 2a         slt   $t3,   $t1,   $s0
+      64:   02 08 00 19         multu   $zero,   $s0,   $t0
+      68:   4a 00 00 00         multu   $zero,   $s0,   $t0

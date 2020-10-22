@@ -29,11 +29,11 @@ main:
    move $s4, $zero               # $s4=0
    nop
    nop
-   sw $t3, 4($a0)                # (4)=$t3
+   sw $t3, 204($a0)                # (4)=$t3
    slti $t5, $s4,0x0011      # $t5=($t4<0x0011)?1:0
-   sw $t5, 8($a0)                # (8)=$t5
+   sw $t5, 208($a0)                # (8)=$t5
    li $s7, 0x11111111            # $s7=0x111111111
    sltu $t6, $zero, $s7          # $t6=(0<0x11111111)?1:0  1
-   sw $t6, 24($a0)               # (24)=$t6
+   sw $t6, 224($a0)               # (24)=$t6
 
    HIT_GOOD_TRAP		#stop temu

@@ -24,13 +24,13 @@ Disassembly of section .text:
   58:	00c5582a 	slt	t3,a2,a1
   5c:	0000a021 	move	s4,zero
 	...
-  68:	ac8b0004 	sw	t3,4(a0)
+  68:	ac8b00cc 	sw	t3,204(a0)
   6c:	2a8d0011 	slti	t5,s4,17
-  70:	ac8d0008 	sw	t5,8(a0)
+  70:	ac8d00d0 	sw	t5,208(a0)
   74:	3c171111 	lui	s7,0x1111
   78:	36f71111 	ori	s7,s7,0x1111
   7c:	0017702b 	sltu	t6,zero,s7
-  80:	ac8e0018 	sw	t6,24(a0)
+  80:	ac8e00e0 	sw	t6,224(a0)
   84:	4a000000 	c2	0x0
 
 Disassembly of section .reginfo:

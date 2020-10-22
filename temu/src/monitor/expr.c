@@ -217,7 +217,6 @@ int eval(Token*p,Token*q,bool*success){
 				printf("Valid HEX Number\n");
 				*success=false;
 			}
-			printf("try convert hex\n");
 			return num;
 			}
 		case REG:{

@@ -18,6 +18,7 @@ static void decode_imm_type(uint32_t instr) {
 
 	op_dest->type = OP_TYPE_REG;
 	op_dest->reg = (instr & RT_MASK) >> (IMM_SIZE);
+	op_dest->val = reg_w(op_dest->reg);
 }
 
 make_helper(lui) {
@@ -159,5 +160,6 @@ make_helper(sw) {
 	uint32_t addr = op_src1->val+(((int32_t)op_src2->imm<<16)>>16); 
 	uint32_t value = op_dest->val & 0xffffffff;
 	mem_write(addr,4,value);
+	//printf("write mem: add:%x, value:%x\n",addr,value);
 	sprintf(assembly, "sw   %s,  0x%04x(%s)", REG_NAME(op_dest->reg), op_src2->imm,  REG_NAME(op_src1->reg));
 }

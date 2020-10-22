@@ -23,7 +23,7 @@ main:
     srl $t1, $s5, 0x000f            # $t1=$s5>>15
     nop
     nop
-    sb $t0, 8($a0)                  # (8)_b=$t0
+    sb $t0, 208($a0)                  # (8)_b=$t0
     mtlo $t1                        # $lo=$t1
     nop
     nop

@@ -117,7 +117,8 @@ static int cmd_x(char *args){
 		printf("Read %d double words from 0x%08x.\n",ndwords,addr);		
 		for(int i=0;i<ndwords;i++){
 			data=mem_read(addr,4);
-			printf("0x%x\n",data);
+			addr+=4;
+			printf("0x%08x\n",data);
 		}    
 		return 0;
 	}else{
