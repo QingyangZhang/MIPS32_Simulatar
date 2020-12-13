@@ -29,4 +29,5 @@ main:
     nop
     slt $t3, $t1, $s0               # $t3=($t1<$s0)?1:0
     multu $s0, $t0                  # $s0*$t0 unsign
+    eret
     HIT_GOOD_TRAP		#stop temu

@@ -10,6 +10,7 @@ make_helper(sltiu);
 make_helper(andi);
 make_helper(lui);
 make_helper(ori);
+
 make_helper(xori);
 make_helper(beq);
 make_helper(bne);
@@ -18,6 +19,7 @@ make_helper(lbu);
 make_helper(lh);
 make_helper(lhu);
 make_helper(lw);
+
 make_helper(sb);
 make_helper(sh);
 make_helper(sw);

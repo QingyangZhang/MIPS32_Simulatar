@@ -24,12 +24,14 @@ Disassembly of section .text:
   40:	00104083 	sra	t0,s0,0x2
   44:	00154bc2 	srl	t1,s5,0xf
 	...
-  50:	a0880008 	sb	t0,8(a0)
+  50:	a08800d0 	sb	t0,208(a0)
   54:	01200013 	mtlo	t1
 	...
   60:	0130582a 	slt	t3,t1,s0
   64:	02080019 	multu	s0,t0
-  68:	4a000000 	c2	0x0
+  68:	08000001 	j	4 <main+0x4>
+  6c:	00000000 	nop
+  70:	4a000000 	c2	0x0
 
 Disassembly of section .reginfo:
 

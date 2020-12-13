@@ -27,8 +27,17 @@ typedef struct {
 
 extern CPU_state cpu;
 
+typedef struct {
+	uint32_t index, random, entryLo0, entryLo1, context, pageMask, wired, reserved1;
+	uint32_t badAddr, count, entryHi, compare, status, cause, epc, prid;
+	uint32_t config, lladdr, watchlo, watchhi, reserved2, reserved3, reserved4, debug;
+	uint32_t dpec, reserved5, errCtl , reserved6, taglo, reserved7, errorEpc, desave;
+} CP0_state;
+
+extern CP0_state cp0;
+
 static inline int check_reg_index(int index) {
-	assert(index >= 0 && index < 31);
+	assert(index >= 0 && index <= 31);
 	return index;
 }
 

@@ -1,6 +1,8 @@
 #include "helper.h"
 #include "monitor.h"
+#include "reg.h"
 
+extern uint32_t instr;
 extern char assembly[80];
 
 /* invalid opcode */
@@ -29,4 +31,19 @@ make_helper(temu_trap) {
 	temu_state = END;
 
 }
+
+make_helper(eret) {
+	cpu.pc = cp0.epc;
+	sprintf(assembly, "epc");
+}
+
+make_helper(mfc0) {
+	
+}
+
+make_helper(mtc0) {
+	
+}
+
+
 

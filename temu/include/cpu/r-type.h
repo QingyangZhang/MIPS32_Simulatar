@@ -9,6 +9,7 @@ make_helper(slt);
 make_helper(sltu);
 make_helper(div);
 make_helper(divu);
+
 make_helper(mult);
 make_helper(multu);
 make_helper(and);
@@ -17,6 +18,7 @@ make_helper(or);
 make_helper(xor);
 make_helper(sllv);
 make_helper(sll);
+
 make_helper(srav);
 make_helper(sra);
 make_helper(srlv);
