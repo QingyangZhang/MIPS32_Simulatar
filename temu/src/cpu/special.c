@@ -38,11 +38,15 @@ make_helper(eret) {
 }
 
 make_helper(mfc0) {
-	
+	uint32_t rt = (instr&((31)<<21));
+	uint32_t rd = (instr&((31)<<11));
+	reg_w(rt) = cp0.gpr[rd]._32;
 }
 
 make_helper(mtc0) {
-	
+	uint32_t rt = (instr&((31)<<21));
+	uint32_t rd = (instr&((31)<<11));
+	cp0.gpr[rd]._32 = reg_w(rt);
 }
 
 

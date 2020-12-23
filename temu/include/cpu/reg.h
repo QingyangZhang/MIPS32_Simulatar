@@ -27,7 +27,12 @@ typedef struct {
 
 extern CPU_state cpu;
 
-typedef struct {
+typedef struct {	
+	union data{
+		uint32_t _32;
+		uint16_t _16;
+		uint8_t _8;
+	} gpr[32];
 	uint32_t index, random, entryLo0, entryLo1, context, pageMask, wired, reserved1;
 	uint32_t badAddr, count, entryHi, compare, status, cause, epc, prid;
 	uint32_t config, lladdr, watchlo, watchhi, reserved2, reserved3, reserved4, debug;

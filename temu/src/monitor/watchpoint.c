@@ -14,8 +14,11 @@ WP* get_head(){
 
 void display_wp(){
 	int count = 0;
+	//scan wp linklist
 	for(WP*itor=head;itor!=NULL;itor=itor->next){
-		printf("NO.%d watchpoint, Exp: %s, Value: %d\n",itor->NO, itor->exp, itor->last_value);
+		//display info of watchpoints
+		printf("NO.%d watchpoint, Exp: %s, 
+		Value: %d\n",itor->NO, itor->exp, itor->last_value);
 	}
 	printf("%d watchpoints working now\n",count);
 }

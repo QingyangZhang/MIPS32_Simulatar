@@ -10,10 +10,14 @@ make_helper(sltiu);
 make_helper(andi);
 make_helper(lui);
 make_helper(ori);
-
 make_helper(xori);
+
 make_helper(beq);
 make_helper(bne);
+make_helper(bge_or_blt);
+make_helper(bgtz);
+make_helper(blez);
+
 make_helper(lb);
 make_helper(lbu);
 make_helper(lh);

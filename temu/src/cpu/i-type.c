@@ -91,6 +91,61 @@ make_helper(bne) {
 	sprintf(assembly, "bne   %s,   %s,   0x%04x", REG_NAME(op_dest->reg), REG_NAME(op_src1->reg), op_src2->imm);
 }
 
+make_helper(bge_or_blt) {
+
+	decode_imm_type(instr);
+	if(op_dest->val==0){
+	//this is instruction	BLTZ
+		if(op_src1->val<0){
+			uint32_t target = ((int32_t)((op_src2->imm<<16)>>14));
+			cpu.pc += (target+4);
+		}
+	}else 
+	if(op_dest->val==1){
+	//this is instruction	BGEZ
+		if(op_src1->val>=0){
+			uint32_t target = ((int32_t)((op_src2->imm<<16)>>14));
+			cpu.pc += (target+4);
+		}
+	}else 
+	if(op_dest->val==17){
+	//this is instruction	BGEZAL
+		if(op_src1->val>=0){
+			uint32_t target = ((int32_t)((op_src2->imm<<16)>>14));
+			cpu.pc += (target+4);
+		}
+		reg_w(31) = cpu.pc+8;
+	}else 
+	if(op_dest->val==17){
+	//this is instruction	BLTZAL
+		if(op_src1->val<0){
+			uint32_t target = ((int32_t)((op_src2->imm<<16)>>14));
+			cpu.pc += (target+4);
+		}
+		reg_w(31) = cpu.pc+8;
+	}
+	
+}
+
+make_helper(bgtz) {
+
+	decode_imm_type(instr);
+	if(op_src1->val>0){
+		uint32_t target = ((int32_t)((op_src2->imm<<16)>>14));
+		cpu.pc += (target+4);
+	}
+}
+
+make_helper(blez) {
+
+	decode_imm_type(instr);
+	if(op_src1->val<=0){
+		uint32_t target = ((int32_t)((op_src2->imm<<16)>>14));
+		cpu.pc += (target+4);
+	}
+}
+
+
 make_helper(lb) {
 
 	decode_imm_type(instr);
